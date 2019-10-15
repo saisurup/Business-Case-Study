@@ -31,3 +31,91 @@ open['cats_dict'] = open.apply(cat3, axis = 1)
 
 ________________________________________________________________________Jo
 >>>>>>> b9ec236dbbb9debecb0abdd958c2921a8a918ed8
+
+#####################
+Shi
+#####################
+###
+#Shi
+###
+## select all restaurants in USA
+us = business.loc[business['country'] == "US"]
+us_restaurants=us.loc[us['categories'].str.contains('Restaurants')]
+
+## select out 16 cuisine types of restaurants and rename the category
+us_restaurants.is_copy=False
+us_restaurants['cuisine']=pd.Series()
+us_restaurants.loc[us_restaurants.categories.str.contains('American') & us_restaurants.categories.str.contains('Traditional'),'cuisine'] = 'American Traditional'
+us_restaurants.loc[us_restaurants.categories.str.contains('American') & us_restaurants.categories.str.contains('New'),'cuisine'] = 'American New'
+us_restaurants.loc[us_restaurants.categories.str.contains('Mexican'), 'cuisine'] = 'Mexican'
+us_restaurants.loc[us_restaurants.categories.str.contains('Italian'), 'cuisine'] = 'Italian'
+us_restaurants.loc[us_restaurants.categories.str.contains('Japanese') & us_restaurants.categories.str.contains('Chinese'), 'cuisine'] = 'Japanese and Chinese'
+us_restaurants.loc[us_restaurants.categories.str.contains('Japanese') & (us_restaurants.categories.str.contains('Chinese') == False), 'cuisine'] = 'Japanese'
+us_restaurants.loc[(us_restaurants.categories.str.contains('Japanese')== False) & us_restaurants.categories.str.contains('Chinese'), 'cuisine'] = 'Chinese'
+us_restaurants.loc[us_restaurants.categories.str.contains('Thai'), 'cuisine'] = 'Thai'
+us_restaurants.loc[us_restaurants.categories.str.contains('Mediterranean'), 'cuisine'] = 'Mediterranean'
+us_restaurants.loc[us_restaurants.categories.str.contains('French'), 'cuisine'] = 'French'
+us_restaurants.loc[us_restaurants.categories.str.contains('Vietnamese'), 'cuisine'] = 'Vietnamese'
+us_restaurants.loc[us_restaurants.categories.str.contains('Greek'),'cuisine'] = 'Greek'
+us_restaurants.loc[us_restaurants.categories.str.contains('Indian'),'cuisine'] = 'Indian'
+us_restaurants.loc[us_restaurants.categories.str.contains('Korean'),'cuisine'] = 'Korean'
+us_restaurants.loc[us_restaurants.categories.str.contains('Hawaiian'),'cuisine'] = 'Hawaiian'
+us_restaurants.loc[us_restaurants.categories.str.contains('African'),'cuisine'] = 'African'
+us_restaurants.loc[us_restaurants.categories.str.contains('Spanish'),'cuisine'] = 'Spanish'
+
+##### Sub cuisine
+us_restaurants['sub_cuisine'] = pd.Series()
+
+us_restaurants.loc[us_restaurants.categories.str.contains('Tex') & us_restaurants.categories.str.contains('Mex'),'sub_cuisine'] = 'Tex Mex'
+us_restaurants.loc[(us_restaurants.categories.str.contains('Food') & us_restaurants.categories.str.contains('Trucks'))| (us_restaurants.categories.str.contains('Street')& us_restaurants.categories.str.contains('Vendors')) | us_restaurants.categories.str.contains('Stands'),'sub_cuisine'] = 'Food Stands'
+us_restaurants.loc[us_restaurants.categories.str.contains('Street') & us_restaurants.categories.str.contains('Vendors'),'sub_cuisine'] = 'Street Vendors'
+us_restaurants.loc[us_restaurants.categories.str.contains('Hot') & us_restaurants.categories.str.contains('Dogs'),'sub_cuisine'] = 'Hot Dogs'
+us_restaurants.loc[us_restaurants.categories.str.contains('Bubble') & us_restaurants.categories.str.contains('Tea'),'sub_cuisine'] = 'Bubble Tea'
+us_restaurants.loc[us_restaurants.categories.str.contains('Gluten') & us_restaurants.categories.str.contains('Free'),'sub_cuisine'] = 'Gluten Free'
+us_restaurants.loc[us_restaurants.categories.str.contains('Chicken') & us_restaurants.categories.str.contains('Wings'),'sub_cuisine'] = 'Chicken Wings'
+us_restaurants.loc[us_restaurants.categories.str.contains('Ethnic') & us_restaurants.categories.str.contains('Food'),'sub_cuisine'] = 'Ethnic Food'
+us_restaurants.loc[us_restaurants.categories.str.contains('Specialty') & us_restaurants.categories.str.contains('Food'),'sub_cuisine'] = 'Specialty Food'
+us_restaurants.loc[us_restaurants.categories.str.contains('Hot') & us_restaurants.categories.str.contains('Pot'),'sub_cuisine'] = 'Hot Pot'
+us_restaurants.loc[us_restaurants.categories.str.contains('Dim') & us_restaurants.categories.str.contains('Sum'),'sub_cuisine'] = 'Dim Sum'
+us_restaurants.loc[us_restaurants.categories.str.contains('Latin') & us_restaurants.categories.str.contains('American'),'sub_cuisine'] = 'Latin American'
+us_restaurants.loc[us_restaurants.categories.str.contains('Barbeque'),'sub_cuisine'] = 'Barbeque'
+us_restaurants.loc[us_restaurants.categories.str.contains('Falafel'),'sub_cuisine'] = 'Falafel'
+us_restaurants.loc[us_restaurants.categories.str.contains('Halal'),'sub_cuisine'] = 'Halal'
+us_restaurants.loc[us_restaurants.categories.str.contains('Salad'),'sub_cuisine'] = 'Salad'
+us_restaurants.loc[us_restaurants.categories.str.contains('Kosher'),'sub_cuisine'] = 'Kosher'
+us_restaurants.loc[us_restaurants.categories.str.contains('Lounges'),'sub_cuisine'] = 'Lounges'
+us_restaurants.loc[us_restaurants.categories.str.contains('Creperies'),'sub_cuisine'] = 'Creperies'
+us_restaurants.loc[us_restaurants.categories.str.contains('Brasseries'),'sub_cuisine'] = 'Brasseries'
+us_restaurants.loc[us_restaurants.categories.str.contains('Bistros'),'sub_cuisine'] = 'Bistros'
+us_restaurants.loc[us_restaurants.categories.str.contains('Lounges'),'sub_cuisine'] = 'Lounges'
+us_restaurants.loc[us_restaurants.categories.str.contains('Kebab'),'sub_cuisine'] = 'Kebab'
+us_restaurants.loc[us_restaurants.categories.str.contains('Caribbean'),'sub_cuisine'] = 'Caribbean'
+us_restaurants.loc[us_restaurants.categories.str.contains('Kebab'),'sub_cuisine'] = 'Kebab'
+us_restaurants.loc[us_restaurants.categories.str.contains('Karaoke'),'sub_cuisine'] = 'Karaoke'
+us_restaurants.loc[us_restaurants.categories.str.contains('Poke'),'sub_cuisine'] = 'Poke'
+us_restaurants.loc[us_restaurants.categories.str.contains('Caterers'),'sub_cuisine'] = 'Caterers'
+us_restaurants.loc[us_restaurants.categories.str.contains('Filipino'),'sub_cuisine'] = 'Filipino'
+us_restaurants.loc[us_restaurants.categories.str.contains('Portuguese'),'sub_cuisine'] = 'Portuguese'
+us_restaurants.loc[us_restaurants.categories.str.contains('Tacos'),'sub_cuisine'] = 'Tacos'
+us_restaurants.loc[us_restaurants.categories.str.contains('Basque'),'sub_cuisine'] = 'Basque'
+us_restaurants.loc[us_restaurants.categories.str.contains('Basque'),'sub_cuisine'] = 'Basque'
+us_restaurants.loc[us_restaurants.categories.str.contains('Basque'),'sub_cuisine'] = 'Basque'
+us_restaurants.loc[us_restaurants.categories.str.contains('Basque'),'sub_cuisine'] = 'Basque'
+us_restaurants.loc[us_restaurants.categories.str.contains('Sandwiches'),'sub_cuisine'] = 'Sandwiches'
+us_restaurants.loc[us_restaurants.categories.str.contains('Szechuan'),'sub_cuisine'] = 'Szechuan'
+us_restaurants.loc[us_restaurants.categories.str.contains('Cantonese'),'sub_cuisine'] = 'Cantonese'
+us_restaurants.loc[us_restaurants.categories.str.contains('Seafood'),'sub_cuisine'] = 'Seafood'
+us_restaurants.loc[us_restaurants.categories.str.contains('Steakhouses'),'sub_cuisine'] = 'Steakhouses'
+us_restaurants.loc[us_restaurants.categories.str.contains('Buffets'),'sub_cuisine'] = 'Buffets'
+us_restaurants.loc[us_restaurants.categories.str.contains('Desserts'),'sub_cuisine'] = 'Desserts'
+us_restaurants.loc[us_restaurants.categories.str.contains('Izakaya'),'sub_cuisine'] = 'Izakaya'
+us_restaurants.loc[us_restaurants.categories.str.contains('Bars') & us_restaurants.categories.str.contains('Nightlife') & us_restaurants.categories.str.contains('Pubs'),'sub_cuisine'] = 'Bars'
+us_restaurants.loc[us_restaurants.categories.str.contains('Burgers'),'sub_cuisine'] = 'Burgers'
+us_restaurants.loc[us_restaurants.categories.str.contains('Vegetarian') & us_restaurants.categories.str.contains('Vegan'),'sub_cuisine'] = 'Vegetarian'
+us_restaurants.loc[us_restaurants.categories.str.contains('Fast') & us_restaurants.categories.str.contains('Food'),'sub_cuisine'] = 'Fast Food'
+us_restaurants.loc[us_restaurants.categories.str.contains('Pizza'),'sub_cuisine'] = 'Pizza'
+us_restaurants.loc[us_restaurants.categories.str.contains('Cafes'),'sub_cuisine'] = 'Cafes'
+us_restaurants.loc[us_restaurants.categories.str.contains('Comfort') & us_restaurants.categories.str.contains('Food'),'sub_cuisine'] = 'Comfort Food'
+us_restaurants.loc[us_restaurants.categories.str.contains('Sushi') & us_restaurants.categories.str.contains('Bars'),'sub_cuisine'] = 'Sushi Bars'
+us_restaurants.loc[us_restaurants.categories.str.contains('Ramen') & us_restaurants.categories.str.contains('Noodles'),'sub_cuisine'] = 'Ramen'
+us_restaurants.loc[us_restaurants.categories.str.contains('Breakfast') & us_restaurants.categories.str.contains('Brunch'),'sub_cuisine'] = 'Breakfast & Brunch'
