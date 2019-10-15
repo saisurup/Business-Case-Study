@@ -3,3 +3,31 @@ us = bus[bus['state'].str.contains('AB|QC|BC|BAS|XGM|XWY|CON|DUR|XGL|DOW') == Fa
 us = us[us.postal_code.str.isnumeric() == True]
 res = us[us['categories'].str.contains('Restaurants')]
 res = res.reset_index()
+<<<<<<< HEAD
+=======
+
+#split categories
+def split_cat(col):
+    return col.split(', ')
+res['cats_split'] = res['categories'].map(split_cat)
+
+#create dictionary with category and review count for each business
+def cat2(col):
+    cats_dict = {}
+    for cat in col:
+        if cat != 'Restaurants' and cat != 'Food':
+            cats_dict[cat] = 0
+    return cats_dict
+
+open['cats_dict'] = open['cats_split'].map(cat2)
+
+def cat3(row):
+    new_dict = {}
+    for key in row['cats_dict'].keys():
+        new_dict[key] = row['review_count']
+    return new_dict
+
+open['cats_dict'] = open.apply(cat3, axis = 1)
+
+________________________________________________________________________Jo
+>>>>>>> b9ec236dbbb9debecb0abdd958c2921a8a918ed8
