@@ -26,3 +26,5 @@ def cat3(row):
     return new_dict
 
 open['cats_dict'] = open.apply(cat3, axis = 1)
+
+________________________________________________________________________Jo
