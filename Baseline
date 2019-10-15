@@ -7,5 +7,4 @@ res = res.reset_index()
 #split categories
 def split_cat(col):
     return col.split(', ')
-
 res['cats_split'] = res['categories'].map(split_cat)
