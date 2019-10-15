@@ -1,0 +1,5 @@
+#filter non-us & non-restaurants
+us = bus[bus['state'].str.contains('AB|QC|BC|BAS|XGM|XWY|CON|DUR|XGL|DOW') == False]
+us = us[us.postal_code.str.isnumeric() == True]
+res = us[us['categories'].str.contains('Restaurants')]
+res = res.reset_index()
