@@ -3,3 +3,9 @@ us = bus[bus['state'].str.contains('AB|QC|BC|BAS|XGM|XWY|CON|DUR|XGL|DOW') == Fa
 us = us[us.postal_code.str.isnumeric() == True]
 res = us[us['categories'].str.contains('Restaurants')]
 res = res.reset_index()
+
+#split categories
+def split_cat(col):
+    return col.split(', ')
+
+res['cats_split'] = res['categories'].map(split_cat)
