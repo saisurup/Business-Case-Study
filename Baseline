@@ -8,3 +8,21 @@ res = res.reset_index()
 def split_cat(col):
     return col.split(', ')
 res['cats_split'] = res['categories'].map(split_cat)
+
+#create dictionary with category and review count for each business
+def cat2(col):
+    cats_dict = {}
+    for cat in col:
+        if cat != 'Restaurants' and cat != 'Food':
+            cats_dict[cat] = 0
+    return cats_dict
+
+open['cats_dict'] = open['cats_split'].map(cat2)
+
+def cat3(row):
+    new_dict = {}
+    for key in row['cats_dict'].keys():
+        new_dict[key] = row['review_count']
+    return new_dict
+
+open['cats_dict'] = open.apply(cat3, axis = 1)
