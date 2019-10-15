@@ -1,3 +1,61 @@
+import json
+import pandas as pd
+import numpy
+import matplotlib.pyplot  as plt
+import seaborn as sns 
+import time
+
+#settings
+start_time=time.time()
+color = sns.color_palette()
+sns.set_style("dark")
+
+#read in business.json as pandas df 
+business_df = pd.read_json('business.json',lines=True)
+business_df.info()
+
+#selecting a single column from a pandas df 
+test = business_df.loc[:,'attributes']
+
+#Splitting dictionary/list inside the 'attributes' Column into Separate Columns
+attributes = business_df['attributes'].apply(pd.Series)
+attributes.info()
+
+#joining attributes df with rest of the business df 
+bus_df = pd.concat([business_df.drop(['attributes'], axis=1), business_df['attributes'].apply(pd.Series)], axis=1)
+bus_df.info()
+
+# What are the popular business categories?
+bus_df.fillna(value=pd.np.nan, inplace=True)
+
+business_cats=' '.join(bus_df['categories'].astype(str))
+
+cats=pd.DataFrame(business_cats.split(','),columns=['category'])
+x=cats.category.value_counts()
+print("There are ",len(x)," different types/categories of Businesses in Yelp!")
+
+#dataframe containing count of businesses in each category 
+x=x.sort_values(ascending=False)
+x=x.iloc[0:100]
+
+#how many businesses are there that are categorised in the top 100 categories?
+top100_categories = list(x.index.values)
+top100_categories='|'.join(top100_categories)
+top100_categories = bus_df.loc[bus_df["categories"].str.contains(("Restaurants|Shopping|Food|Home Services|Health & Medical|Nightlife|Beauty & Spas|Local Services|Bars|Event Planning & Services|Automotive|Active Life|Fashion|Home & Garden|American (Traditional)| Sandwiches| Professional Services| Arts & Entertainment| Fast Food| Coffee & Tea| Breakfast & Brunch| Doctors| Specialty Food| Hair Salons| American (New)| Burgers| Fitness & Instruction| Hotels & Travel| Real Estate| Pizza| Auto Repair| Hair Removal| Skin Care| Italian| Education| Dentists| Desserts| Women's Clothing| Cafes| Bakeries| Beer| Wine & Spirits| Contractors| Nail Salons| Restaurants Restaurants| Grocery| General Dentistry| Waxing| Massage| Pets| Salad| Day Spas| Caterers| Mexican| Chicken Wings| Sports Bars| Pet Services| Home Decor| Gyms| Chinese| Mags| Pubs| Cosmetics & Beauty Supply| Flowers & Gifts| Venues & Event Spaces| Accessories| Seafood| Sporting Goods| Cosmetic Dentists| Hotels| Tires| Trainers| Furniture Stores| Hair Stylists| Men's Clothing| Financial Services| Japanese| Arts & Crafts| Ice Cream & Frozen Yogurt| Oil Change Stations| Delis| Eyelash Service| Massage Therapy| Music & Video| Asian Fusion| Lounges| Canadian (New)| Specialty Schools| Books| Apartments| Department Stores| Convenience Stores| IT Services & Computer Repair| Electronics| Sushi Bars| Mediterranean| Auto Parts & Supplies| Party & Event Planning| Medical Centers| Juice Bars & Smoothies"),regex = True,na=False)]
+
+print("The top 100 categories account for",round(len(top100_categories)/len(bus_df),2)*100,"% of Businesses in Yelp!")
+
+#filter rows where business is categorised as [some category]
+test = bus_df.loc[bus_df["categories"].str.contains(('Health Market'),regex = True,na=False)]
+
+#filter for only restaurants-type businesses
+bus_df_clean = bus_df.loc[bus_df["categories"].str.contains(("Restaurants|Food|Health Markets|Bars|American|Sandwiches|Fast Food|Coffee & Tea|Breakfast & Brunch|Specialty Food|Burgers|Pizza|Italian|Desserts|Cafes|Bakeries|Beer|Wine & Spirits|Grocery|Salad|Caterers|Mexican|Chicken Wings|Chinese|Pubs|Seafood|Japanese|Ice Cream & Frozen Yogurt|Delis|Asian Fusion|Lounges|Canadian|Sushi Bars|Mediterranean|Juice Bars & Smoothies"),regex = True,na=False)]
+print("Restaurant categories account for",round(len(bus_df_clean)/len(bus_df),2)*100,"% of Businesses in Yelp!")
+
+
+
+############### end of angela's code ###############
+
 #filter non-us & non-restaurants
 us = bus[bus['state'].str.contains('AB|QC|BC|BAS|XGM|XWY|CON|DUR|XGL|DOW') == False] #bus = original business.json file
 us = us[us.postal_code.str.isnumeric() == True]
