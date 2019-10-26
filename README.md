@@ -33,7 +33,7 @@ us_restaurants = us[us['categories'].str.contains('Restaurants')]
 us_restaurants = us_res.reset_index()
 ```
 
-select out 16 cuisine types of restaurants and rename the category
+Select out 16 cuisine types of restaurants and rename the category
 ```
 us_restaurants.is_copy=False
 us_restaurants['cuisine']=pd.Series()
@@ -100,7 +100,7 @@ us_restaurants.loc[us_restaurants.categories.str.contains('Steakhouses'),'sub_cu
 us_restaurants.loc[us_restaurants.categories.str.contains('Buffets'),'sub_cuisine'] = 'Buffets'
 us_restaurants.loc[us_restaurants.categories.str.contains('Desserts'),'sub_cuisine'] = 'Desserts'
 us_restaurants.loc[us_restaurants.categories.str.contains('Izakaya'),'sub_cuisine'] = 'Izakaya'
-us_restaurants.loc[us_restaurants.categories.str.contains('Bars') & us_restaurants.categories.str.contains('Nightlife') & us_restaurants.categories.str.contains('Pubs'),'sub_cuisine'] = 'Bars'
+us_restaurants.loc[us_restaurants.categories.str.contains('Bars') | us_restaurants.categories.str.contains('Nightlife') | us_restaurants.categories.str.contains('Pubs'),'sub_cuisine'] = 'Bars'
 us_restaurants.loc[us_restaurants.categories.str.contains('Burgers'),'sub_cuisine'] = 'Burgers'
 us_restaurants.loc[us_restaurants.categories.str.contains('Vegetarian') & us_restaurants.categories.str.contains('Vegan'),'sub_cuisine'] = 'Vegetarian'
 us_restaurants.loc[us_restaurants.categories.str.contains('Fast') & us_restaurants.categories.str.contains('Food'),'sub_cuisine'] = 'Fast Food'
