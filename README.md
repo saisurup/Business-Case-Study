@@ -16,10 +16,11 @@ os.chdir(path)
 Loading file
 ```
 business = pd.read_json("business.json",lines = True)
+len(business)
 ```
+
 Drop na
 ```
-len(business)
 business.loc[business['categories'].isna()].review_count.sum()
 business.dropna(subset=['categories'],inplace=True)
 len(business)
