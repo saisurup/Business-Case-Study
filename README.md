@@ -20,7 +20,6 @@ business = pd.read_json("business.json",lines = True)
 Drop na
 ```
 len(business)
-business = pd.read_json("business.json",lines = True)
 business.loc[business['categories'].isna()].review_count.sum()
 business.dropna(subset=['categories'],inplace=True)
 len(business)
